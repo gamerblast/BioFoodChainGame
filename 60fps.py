@@ -181,20 +181,21 @@ def runGame():
         
         DISPLAYSURF.fill(BLUE)
         
-        ai_pos = 0
+        ai_consumer_pos = 0
+        ai_producer_pos = 0
         
         player.draw()
         for ai in ai_consumer_list:
             ai.move()
             ai.draw()
             if player.rect.colliderect(ai.rect) and ai.food_level < player.food_level:
-                del ai_consumer_list[ai_pos]
-            ai_pos += 1
+                del ai_consumer_list[ai_consumer_pos]
+            ai_consumer_pos += 1
         for ai in ai_producer_list:
             ai.draw()
             if player.rect.colliderect(ai.rect) and ai.food_level < player.food_level:
-                del ai_consumer_list[ai_pos]
-            ai_pos += 1
+                del ai_producer_list[ai_producer_pos]
+            ai_producer_pos += 1
         
         pygame.display.update()
         FPSCLOCK.tick(FPS)
