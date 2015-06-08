@@ -1,5 +1,5 @@
 import random, pygame, sys
-from pygame.locals import *
+from pygame.locals import *   
 
 # fps and screen resolution    
 FPS = 60
@@ -26,6 +26,7 @@ class Player(object):
         self.food_level = food_level
         self.width = width
         self.height = height
+        self.rect = pygame.Rect(startx, starty, width, height)
         self.playerxmove = 0
         self.playerymove = 0
         
@@ -55,7 +56,9 @@ class Player(object):
                     self.playerxmove = 0
                 if(event.key == K_ESCAPE):
                     terminate()
+        self.rect.x += self.playerxmove
         self.x += self.playerxmove
+        self.rect.y += self.playerymove
         self.y += self.playerymove
         
     def draw(self):
@@ -70,20 +73,25 @@ class ai_Consumer(object):
         self.image = image
         self.width = width
         self.height = height
+        self.rect = pygame.Rect(startx, starty, width, height)
     
     def draw(self):
         DISPLAYSURF.blit(self.image, (self.x, self.y))
         
     def move(self):
         if(self.movement == RIGHT and self.x < WINDOWWIDTH):
+            self.rect.x += 3
             self.x += 3
         elif(self.movement == RIGHT and self.x >= WINDOWWIDTH):
             self.movement = LEFT
+            self.rect.x -= 3
             self.x -= 3
         elif(self.movement == LEFT and self.x > 0):
+            self.rect.x -= 3
             self.x -= 3
         else:
             self.movement = RIGHT
+            self.rect.x += 3
             self.x += 3
         
 class ai_Producer(object):
@@ -178,7 +186,7 @@ def runGame():
         for ai in ai_consumer_list:
             ai.move()
             ai.draw()
-            if isTouching(ai, player) and ai.food_level < player.food_level:
+            if player.rect.colliderect(ai.rect) and ai.food_level < player.food_level:
                 del ai_consumer_list[ai_pos]
             ai_pos += 1
         for ai in ai_producer_list:
@@ -195,20 +203,6 @@ def startGame():
     pressKeyRect.topleft = (WINDOWWIDTH -    250, WINDOWHEIGHT - 30)   
     DISPLAYSURF.blit(pressKey, pressKeyRect)
     
-def isTouching(ai, player):
-    if(player.x + player.width >= ai.x >= player.x and player.y + player.height >= ai.y >= player.y):
-        print("dank memes")
-        return True
-    elif(player.x + player.width >= ai.x + ai.width >= player.x and player.y + player.height >= ai.y >= player.y):
-        print("dank memes")
-        return True
-    elif(player.x + player.width >= ai.x >= player.x and player.y + player.height >= ai.y + ai.height >= player.y):
-        print("dank memes")
-        return True
-    elif(player.x + player.width >= ai.x + ai.width >= player.x and player.y + player.height >= ai.y + ai.height >= player.y):
-        print("dank memes")
-        return True
-    return False
         
 def checkForKeyPress():
     if len(pygame.event.get(QUIT)) > 0:
