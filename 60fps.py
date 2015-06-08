@@ -95,11 +95,12 @@ class ai_Consumer(object):
             self.x += 3
         
 class ai_Producer(object):
-    def __init__(self, startx, starty, image, food_level):
+    def __init__(self, startx, starty, image, food_level, width, height):
         self.image = image
         self.food_level = food_level
         self.x = startx
         self.y = starty
+        self.rect = pygame.Rect(startx, starty, width, height)
     def draw(self):
         DISPLAYSURF.blit(self.image, (self.x, self.y))
 
@@ -162,7 +163,7 @@ def runGame():
     
     player = Player(playerx, playery, toothfish, 70, 31, playerfoodlevel)
     
-    plant1 = ai_Producer(500, 500, toothfish, 0)
+    plant1 = ai_Producer(500, 500, toothfish, 0, 70, 31)
     consumer1 = ai_Consumer(200, 200, toothfish, 0, RIGHT, 70, 31)
     ai_consumer_list = [consumer1]
     ai_producer_list = [plant1]
@@ -191,6 +192,8 @@ def runGame():
             ai_pos += 1
         for ai in ai_producer_list:
             ai.draw()
+            if player.rect.colliderect(ai.rect) and ai.food_level < player.food_level:
+                del ai_consumer_list[ai_pos]
             ai_pos += 1
         
         pygame.display.update()
