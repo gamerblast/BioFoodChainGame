@@ -8,6 +8,7 @@ WINDOWHEIGHT = 540
 
 # colors
 WHITE = (255,255,255)
+ARCTICWHITE = (253, 253, 252)
 RED =   (255, 0, 0)
 GREEN = (0, 255, 0)
 ORANGE =(255, 128, 0)
@@ -126,6 +127,7 @@ def main():
     global toothfish
     global penguin
     global whale
+    global background
     global player_foodlevel
     global player_image
     global player_height
@@ -259,7 +261,7 @@ def runGame():
         
         player.move()
         
-        DISPLAYSURF.fill(BLUE)
+        DISPLAYSURF.fill(ARCTICWHITE)
         
         ai_consumer_pos = 0
         ai_producer_pos = 0
@@ -484,6 +486,10 @@ def showFactScreen2():
     intro5Rect = intro5.get_rect()
     intro5Rect.center = ((WINDOWWIDTH/2)-100, WINDOWHEIGHT/2+100)
     DISPLAYSURF.blit(intro5,intro5Rect)
+    intro6Rect = intro6.get_rect()
+    intro6Rect.center = ((WINDOWWIDTH/2)-100, WINDOWHEIGHT/2+120)
+    DISPLAYSURF.blit(intro6,intro6Rect)
+
     
     pic1 = pygame.image.load("algae.png")
     pic2 = pygame.image.load("lichens.png")

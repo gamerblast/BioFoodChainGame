@@ -45,7 +45,7 @@ class BuildExe:
         self.script = "60fps.py"
  
         #Name of program
-        self.project_name = "Tundra_Game"
+        self.project_name = "BioGame"
  
         #Project url
         self.project_url = "about:none"
