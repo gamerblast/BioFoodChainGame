@@ -109,7 +109,9 @@ class BuildExe:
             if names:
                 lst.append( (dirname, names ) )
  
-        file_list = []
+        file_list = ['algae.png', 'arctic.png', 'bacteria.png', 'cod.png', 'Emperor.png', 'food_chain.png', 'Fungi.png', 'General map.gif', 'Georgiapng.png', 'grass.png', 
+                     'happy-green-algae.png', 'Icefish.png', 'islands.png', 'Leopard Seal.png', 'lichens.png', 'moss.png', 'penguin_cute.png', 'rrg_1_24_cartoon_whale-1979px.png',
+                     'Specific map.gif', 'tundrafoodpyramid.png', 'whale1.png', 'worm.png']
         recursive = kw.get('recursive', True)
         if recursive:
             os.path.walk(srcdir, walk_helper, (file_list, wildcards))
